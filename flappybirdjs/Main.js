@@ -11,6 +11,16 @@ var jump_height = 10;
 var pipe_frequency = 1500;
 var pipe_gap = 90;
 var less_difficult = 10;
+// Game FPS
+var fps = 0;
+var show_fps = false;
+var LAST_FRAME_TIME = 0;
+function showFPS(){
+    ctx.fillStyle = "White";
+    ctx.font      = "normal 16pt Arial";
+
+    ctx.fillText(fps + " fps", 10, 26);
+}
 // Game sounds
 var theme_sound = new Audio('Sounds/themesong.mp3');
 theme_sound.loop = true;
@@ -102,7 +112,7 @@ function Bird(x, y, width, height, textures)
             if (this.velocity < -gravity)
                 this.velocity = -gravity;
             if (this.y + this.height < 620) // Bird bottom Y < The ground Y
-                this.move(this.velocity); // Gravity
+                this.move(this.velocity); // Apply gravity while bird is above ground Y
             this.angle = this.velocity * -0.04; // Bird rotate with velocity
         }
         // Jumping Control
@@ -188,12 +198,15 @@ function Button(x, y, width, height, texture)
     // Mouse click collision
     this.click = function()
     {
-        if ((log_mouse_pos[0]>=this.x*canvas_ratio_x)&&(log_mouse_pos[0]<=(this.x+this.width)*canvas_ratio_x))
-            var collision_x = true;
-        else var collision_x = false;
-        if ((log_mouse_pos[1]>=this.y*canvas_ratio_y)&&(log_mouse_pos[1]<=(this.y+this.height)*canvas_ratio_y))
-            var collision_y = true;
-        else var collision_y = false;
+        if (this.is_active)
+        {
+            if ((log_mouse_pos[0]>=this.x*canvas_ratio_x)&&(log_mouse_pos[0]<=(this.x+this.width)*canvas_ratio_x))
+                var collision_x = true;
+            else var collision_x = false;
+            if ((log_mouse_pos[1]>=this.y*canvas_ratio_y)&&(log_mouse_pos[1]<=(this.y+this.height)*canvas_ratio_y))
+                var collision_y = true;
+            else var collision_y = false;
+        }
         log_mouse_pos = [0,0];
         return(collision_x&&collision_y);
     }
@@ -209,7 +222,7 @@ function collisionCheck(bird, pipe)
     var pipe_right = pipe.x + pipe.width - less_difficult;
     var pipe_bottom = pipe.y + pipe.height - less_difficult;
     var pipe_top = pipe.y + less_difficult;
-    if((bird_right >= pipe_left)&&(pipe_right >= bird_left))
+    if((bird_right >= pipe_left)&&(bird_left <= pipe_right))
         var collision_x = true;
     else var collision_x = false;
     if ((bird_bottom >= pipe_top)&&(bird_top <= pipe_bottom))
@@ -223,7 +236,7 @@ var last_pipe = d.getTime() - pipe_frequency;
 // Game assets
 var background = new Scene(0,-70,770,788,'Textures/bg.png');
 var ground = new Scene(0,620,932,168,'Textures/ground.png');
-var game_name = new Button(200,100,267,72,'Textures/flappybird.png');
+var game_name = new Button(195,100,267,72,'Textures/flappybird.png');
 var get_ready = new Button(230,280,200,54,'Textures/getready.png');
 var start_button = new Button (280,350,100,56,'Textures/button_start.png');
 var end_text = new Button(230,280,200,44,'Textures/gameover.png');
@@ -242,7 +255,7 @@ var is_running = false; // Flag set to true when player press space or mouse cli
 var game_over = false; // Game over true if player loses, false if game start or replay
 var pass_pipe = false; // Flag to check if player passed the pipes to add score
 var score = 0; // Storing player score
-function startGame()
+function startGame(TIME)
 {
     var game_start = false; // Flag to check if player clicked the start button or press space during the mainmenu
     if (game_over) // If game's over, show the game over buttons and check for mouse click on the ok button
@@ -289,14 +302,14 @@ function startGame()
         if (collisionCheck(bird,pipe_group[i]))
             game_over = true;
     }
-    // Top and bottom collisions
+    // Top and bottom boundary collisions
     if (bird.y + bird.height >= 620) game_over = true; // Bottom
-    if (bird.y <= 25) game_over = true; // Top
+    if (bird.y <= 0) game_over = true; // Top
     
     // Scoring
     if (pipe_group.length > 0)
     {
-        if((bird.x + bird.width >= pipe_group[0].x)&&((pipe_group[0].x+pipe_group[0].width) >= bird.x))
+        if((bird.x + bird.width >= pipe_group[0].x)&&(pipe_group[0].x + pipe_group[0].width >= bird.x))
             var collision_x = true;
         else var collision_x = false;
 
@@ -306,7 +319,7 @@ function startGame()
             if((pipe_group[0].x+pipe_group[0].width) < bird.x)
             {
                 score+=1;
-                if(score %10==0)
+                if(score % 15 == 0)
                 {
                     scroll_speed-=0.50;
                     pipe_frequency-=100;
@@ -353,7 +366,7 @@ function startGame()
     for (var i = 0; i < pipe_group.length; i++)
         pipe_group[i].draw();
     // Draw Score
-    if (flying)
+    if (flying) // Only draw when playing
     {
         var numbers = Array.from(String(score),Number);
         var length_numbers = numbers.length;
@@ -372,6 +385,10 @@ function startGame()
     get_ready.draw();
     end_text.draw();
     ok_button.draw();
+    // Render FPS
+    if (show_fps) showFPS();
+    fps = Math.round(1 / ((performance.now() - LAST_FRAME_TIME) / 1000));
+    LAST_FRAME_TIME = TIME;
     requestAnimationFrame(startGame);
 }
 startGame();
