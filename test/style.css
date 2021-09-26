@@ -1,0 +1,26 @@
+body.members{
+    background: url(images/hcmus.jpg) no-repeat;
+    background-size: cover;
+    background-color: #cccccc;
+}
+.box{
+    width: fit-content;
+    background:rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+    border-radius: 25px;
+}
+.box-img{
+    border-radius: 15px;
+}
+.back{
+    text-align: center;
+    margin-top: 1%;
+}
+table{
+    color:white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: auto;
+}
