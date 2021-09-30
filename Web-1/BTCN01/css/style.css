@@ -1,0 +1,118 @@
+body { /* stripesgenerator.com */
+    background-image: linear-gradient(45deg, #fafafa 25%, #e8e8e8 25%, #e8e8e8 50%, #fafafa 50%, #fafafa 75%, #e8e8e8 75%, #e8e8e8 100%);
+    background-size: 2.83px 2.83px;
+}
+
+#container-style {
+    border:1px solid rgb(216, 216, 216);
+}
+
+#logo h3 {
+    color: rgb(205, 32, 39);
+    position: relative;
+    top:4px;
+}
+#logo p {
+    font-size: 0.7rem;
+}
+#callnumber p {
+    color: rgb(205, 32, 39);
+    font-weight: bold;
+}
+.grey-paragraph-text{
+    font-size: 0.9rem;
+    color:grey;
+}
+
+#intro-text h2{
+    font-size: 0.92rem;
+}
+
+.purchase-button {
+	background:linear-gradient(to bottom, #ff9900 5%, #ff5500 100%);
+	background-color:#ff9900;
+	border-radius:25px;
+	border:1px solid #f0ca8d;
+	display:inline-block;
+	cursor:pointer;
+	color:#ca4300;
+	font-family:Arial;
+	font-size:0.92rem;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ff9e4a;
+    text-align: center;
+}
+.purchase-button:hover {
+	background:linear-gradient(to bottom, #ff5500 5%, #ff9900 100%);
+	background-color:#ff5500;
+}
+.purchase-button:active {
+	position:relative;
+	top:1px;
+}
+
+.tour-button {
+	background:linear-gradient(to bottom, #f4f4f4 5%, #dcdcdc 100%);
+	background-color:#f4f4f4;
+	border-radius:25px;
+	border:1px solid #e9e9e9;
+	display:inline-block;
+	cursor:pointer;
+	color:#838383;
+	font-family:Arial;
+	font-size:0.92rem;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #d7d7d7;
+    text-align: center;
+}
+.tour-button:hover {
+	background:linear-gradient(to bottom, #dcdcdc 5%, #f4f4f4 100%);
+	background-color:#dcdcdc;
+}
+.tour-button:active {
+	position:relative;
+	top:1px;
+}
+
+a {
+    color:orange;
+    text-decoration: none;
+}
+/* cssarrowplease.com */
+.arrow-box {
+	position: relative;
+	background: #ffffff;
+	border: 1px solid gray;
+    text-align: center;
+    color:grey;
+    padding: 2%;
+}
+.arrow-box:after, .arrow-box:before {
+	top: 100%;
+	left: 10%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow-box:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-top-color: #ffffff;
+	border-width: 25px;
+	margin-left: -25px;
+}
+.arrow-box:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-top-color: gray;
+	border-width: 26px;
+	margin-left: -26px;
+}
+
+.inverted {
+    filter:invert(100%);
+}
