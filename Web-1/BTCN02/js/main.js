@@ -5,7 +5,7 @@ var num1Check;
 var num2Check;
 
 num1.onblur = function () {
-    if (Number.isNaN(parseFloat(num1.value)) && !num1.validity.valueMissing) {
+    if (Number.isNaN(parseFloat(+num1.value)) && !num1.validity.valueMissing) {
         warning.innerHTML = 'Giá trị nhập ở ô <em>Số thứ nhất</em> không phải là số thực.';
         num1Check = false;
     } else
@@ -13,7 +13,7 @@ num1.onblur = function () {
 }
 
 num2.onblur = function () {
-    if (Number.isNaN(parseFloat(num2.value)) && !num2.validity.valueMissing) {
+    if (Number.isNaN(parseFloat(+num2.value)) && !num2.validity.valueMissing) {
         warning.innerHTML = 'Giá trị nhập ở ô <em>Số thứ hai</em> không phải là số thực.';
         num2Check = false;
     } else
